@@ -5,6 +5,5 @@ pages_build_output_dir = "dist"
 [vars]
 # Add any environment variables here
 
-[compatibility]
 compatibility_date = "2024-04-03"
 compatibility_flags = ["nodejs_compat"]
