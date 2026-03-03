@@ -2,6 +2,7 @@ import { TonConnectUIProvider } from '@tonconnect/ui-react';
 
 import { App } from '@/components/App.tsx';
 import { ErrorBoundary } from '@/components/ErrorBoundary.tsx';
+import { PermissionGuard } from '@/components/PermissionGuard.tsx';
 import { publicUrl } from '@/helpers/publicUrl.ts';
 
 function ErrorBoundaryError({ error }: { error: unknown }) {
@@ -24,10 +25,10 @@ function ErrorBoundaryError({ error }: { error: unknown }) {
 export function Root() {
   return (
     <ErrorBoundary fallback={ErrorBoundaryError}>
-      <TonConnectUIProvider
-        manifestUrl={publicUrl('tonconnect-manifest.json')}
-      >
-        <App/>
+      <TonConnectUIProvider manifestUrl={publicUrl('tonconnect-manifest.json')}>
+        <PermissionGuard>
+          <App />
+        </PermissionGuard>
       </TonConnectUIProvider>
     </ErrorBoundary>
   );
