@@ -2,7 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { PermissionGuard } from './PermissionGuard';
 import { checkPermission } from '@/services/permission.service';
-import { initData, useSignal } from '@tma.js/sdk-react';
+import { useSignal } from '@tma.js/sdk-react';
 
 vi.mock('@/services/permission.service');
 vi.mock('@tma.js/sdk-react', async () => {
@@ -26,13 +26,13 @@ describe('PermissionGuard', () => {
     });
   });
 
-  it('shows loading state while checking permissions', async () => {
+  it('shows loading state while checking permissions', () => {
     (checkPermission as any).mockReturnValue(new Promise(() => {})); // Never resolves
 
     render(
       <PermissionGuard>
         <div data-testid="protected-content">Protected Content</div>
-      </PermissionGuard>
+      </PermissionGuard>,
     );
 
     expect(screen.getByText(/Checking permissions/i)).toBeInTheDocument();
@@ -45,7 +45,7 @@ describe('PermissionGuard', () => {
     render(
       <PermissionGuard>
         <div data-testid="protected-content">Protected Content</div>
-      </PermissionGuard>
+      </PermissionGuard>,
     );
 
     await waitFor(() => {
@@ -60,7 +60,7 @@ describe('PermissionGuard', () => {
     render(
       <PermissionGuard>
         <div data-testid="protected-content">Protected Content</div>
-      </PermissionGuard>
+      </PermissionGuard>,
     );
 
     await waitFor(() => {
@@ -75,7 +75,7 @@ describe('PermissionGuard', () => {
     render(
       <PermissionGuard>
         <div data-testid="protected-content">Protected Content</div>
-      </PermissionGuard>
+      </PermissionGuard>,
     );
 
     await waitFor(() => {

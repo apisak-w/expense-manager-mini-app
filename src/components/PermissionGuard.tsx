@@ -15,7 +15,7 @@ export function PermissionGuard({ children }: PermissionGuardProps) {
   useEffect(() => {
     async function verifyPermission() {
       const userId = initDataState?.user?.id.toString();
-      
+
       if (!userId) {
         setIsAuthorized(false);
         setIsLoading(false);
@@ -27,7 +27,7 @@ export function PermissionGuard({ children }: PermissionGuardProps) {
       setIsLoading(false);
     }
 
-    verifyPermission();
+    void verifyPermission();
   }, [initDataState]);
 
   if (isLoading) {

@@ -7,28 +7,33 @@ describe('PermissionService', () => {
 
   beforeEach(() => {
     vi.stubEnv('VITE_API_URL', apiUrl);
+    vi.stubGlobal('fetch', vi.fn());
     vi.clearAllMocks();
   });
 
+
   it('returns true when user has permission', async () => {
     const mockResponse = { userId: 12345, isAuthorized: true };
-    global.fetch = vi.fn().mockResolvedValue({
+    vi.mocked(fetch).mockResolvedValue({
       ok: true,
       json: () => Promise.resolve(mockResponse),
-    });
+    } as Response);
+
 
     const result = await checkPermission(userId);
 
     expect(result).toBe(true);
-    expect(global.fetch).toHaveBeenCalledWith(`${apiUrl}/users/${userId}/permissions`);
+    expect(fetch).toHaveBeenCalledWith(`${apiUrl}/users/${userId}/permissions`);
+
   });
 
   it('returns false when user does not have permission', async () => {
     const mockResponse = { userId: 12345, isAuthorized: false };
-    global.fetch = vi.fn().mockResolvedValue({
+    vi.mocked(fetch).mockResolvedValue({
       ok: true,
       json: () => Promise.resolve(mockResponse),
-    });
+    } as Response);
+
 
     const result = await checkPermission(userId);
 
@@ -36,9 +41,10 @@ describe('PermissionService', () => {
   });
 
   it('returns false when API request fails', async () => {
-    global.fetch = vi.fn().mockResolvedValue({
+    vi.mocked(fetch).mockResolvedValue({
       ok: false,
-    });
+    } as Response);
+
 
     const result = await checkPermission(userId);
 
@@ -46,7 +52,8 @@ describe('PermissionService', () => {
   });
 
   it('returns false when fetch throws error', async () => {
-    global.fetch = vi.fn().mockRejectedValue(new Error('Network error'));
+    vi.mocked(fetch).mockRejectedValue(new Error('Network error'));
+
 
     const result = await checkPermission(userId);
 

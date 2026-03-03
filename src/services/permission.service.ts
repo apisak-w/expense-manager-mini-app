@@ -5,7 +5,7 @@
  */
 export async function checkPermission(userId: string): Promise<boolean> {
   const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8787';
-  
+
   try {
     const response = await fetch(`${apiUrl}/users/${userId}/permissions`);
     if (!response.ok) {
