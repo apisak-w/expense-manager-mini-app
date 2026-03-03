@@ -19,7 +19,8 @@
     "pages:deploy": "wrangler pages deploy dist --project-name=expense-manager-mini-app",
     "predeploy": "pnpm run build",
     "test": "vitest",
-    "prepare": "husky"
+    "prepare": "husky",
+    "lint-staged": "lint-staged"
   },
   "dependencies": {
     "@telegram-apps/telegram-ui": "^2.1.9",
