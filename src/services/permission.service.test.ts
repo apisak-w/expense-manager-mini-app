@@ -11,7 +11,6 @@ describe('PermissionService', () => {
     vi.clearAllMocks();
   });
 
-
   it('returns true when user has permission', async () => {
     const mockResponse = { userId: 12345, isAuthorized: true };
     vi.mocked(fetch).mockResolvedValue({
@@ -19,12 +18,10 @@ describe('PermissionService', () => {
       json: () => Promise.resolve(mockResponse),
     } as Response);
 
-
     const result = await checkPermission(userId);
 
     expect(result).toBe(true);
     expect(fetch).toHaveBeenCalledWith(`${apiUrl}/users/${userId}/permissions`);
-
   });
 
   it('returns false when user does not have permission', async () => {
@@ -33,7 +30,6 @@ describe('PermissionService', () => {
       ok: true,
       json: () => Promise.resolve(mockResponse),
     } as Response);
-
 
     const result = await checkPermission(userId);
 
@@ -45,7 +41,6 @@ describe('PermissionService', () => {
       ok: false,
     } as Response);
 
-
     const result = await checkPermission(userId);
 
     expect(result).toBe(false);
@@ -53,7 +48,6 @@ describe('PermissionService', () => {
 
   it('returns false when fetch throws error', async () => {
     vi.mocked(fetch).mockRejectedValue(new Error('Network error'));
-
 
     const result = await checkPermission(userId);
 
